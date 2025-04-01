@@ -5,10 +5,10 @@ ruby "3.2.7"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft"
 
-# Use sqlite3 as the database for Active Record
+# Use postgresql as the database for Active Record
 gem "pg"
 
 # Use the Puma web server [https://github.com/puma/puma]
@@ -32,12 +32,17 @@ gem "jbuilder"
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -46,7 +51,10 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
@@ -65,3 +73,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "image_processing", ">= 1.2"
