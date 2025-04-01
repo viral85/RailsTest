@@ -1,0 +1,52 @@
+<table class="table table-bordered table-striped table-hover">
+  <thead class="table-light">
+  <tr>
+    <th>Date</th>
+    <th>Company</th>
+    <th>Check Number</th>
+    <th>Invoices</th>
+    <th class="text-center">Image</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @checks.any? %>
+    <% @checks.each do |check| %>
+      <tr class="align-middle">
+        <td><%= check.created_at.in_time_zone("Asia/Kolkata").strftime("%Y-%m-%d %I:%M:%S %p") %></td>
+        <td><%= check.company.name %></td>
+        <td><%= check.number %></td>
+        <td><%= check.invoices.pluck(:number).join(", ") %></td>
+        <td class="text-center">
+          <% if check.image.attached? %>
+            <button class="btn image-button" data-bs-toggle="modal" data-bs-target="#imageModal-<%= check.id %>">
+              <img src="<%= url_for(check.small_variant) %>" alt="Image" style="width: 50px; height: auto;">
+              <span class="hover-text"> Open Image</span>
+            </button>
+          <% else %>
+            <span class="text-muted">No Image</span>
+          <% end %>
+        </td>
+      </tr>
+
+      <!-- Image Modal (Moved Outside the Loop) -->
+      <div class="modal fade" id="imageModal-<%= check.id %>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Image Preview</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              <img src="<%= url_for(check.model_variant) %>" alt="Image" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="5" class="text-center text-danger fw-bold">No records found</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
