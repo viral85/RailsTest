@@ -4,21 +4,11 @@ default: &default
   pool: 5
   username: <%= Rails.application.credentials.dig(:database, :rta_username) %>
   password: <%= Rails.application.credentials.dig(:database, :rta_password) %>  
+  database: <%= Rails.application.credentials.dig(:database, :rta_db) %>
   host: localhost
 
 development:
   <<: *default
-  database: <%= Rails.application.credentials.dig(:database, :rta_db) %>
-
-test:
-  <<: *default
-  database: rails_dev_test
-
 
 production:
   <<: *default
-  database: rails_dev
-
-staging:
-  <<: *default
-  database: rails_dev
