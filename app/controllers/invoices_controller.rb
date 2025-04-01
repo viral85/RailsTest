@@ -1,4 +1,9 @@
 class InvoicesController < ApplicationController
+    def index
+        @invoices = Invoice.all
+        @checkInvoices = CheckInvoice.all
+    end
+
     def new
         @invoice = Invoice.new
         @check = Check.new
